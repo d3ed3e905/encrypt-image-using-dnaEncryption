@@ -1,5 +1,11 @@
 from PIL import Image
 from utils import *
+from chaos_logistic_function import *
+
+# chaos logistic function init data
+X0 = 0.25
+R = 3.94
+
 
 def main():
 
@@ -11,6 +17,10 @@ def main():
     # Image size
     W, H = image.size
     print("pixels: {}  width: {} height: {} ".format(W * H, W, H))
+
+    # verify logistic function
+    x = logistic_function(X0, R, W, H)
+    print(x)
 
     # Split image into R G B channels
     np_image = np.array(image)

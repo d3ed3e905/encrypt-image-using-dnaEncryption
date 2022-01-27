@@ -1,4 +1,4 @@
-import numpy as np
+from chaos_logistic_function import *
 from dna_data import rule
 
 
