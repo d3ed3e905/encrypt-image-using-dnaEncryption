@@ -58,3 +58,19 @@ def binary_to_dna(l):
     to_dna = np.vectorize(bin_to_dna)
 
     return list(map(to_dna, l))
+
+
+def scramble_add(e, log_g):
+    add_dna = lambda x, y: "".join(
+        list(map(dnaTable.get, [x[0] + y[0], x[1] + y[1], x[2] + y[2], x[3] + y[3]]))
+    )
+    compute_addition = np.vectorize(add_dna)
+    return np.array(list(map(compute_addition, e, log_g)))
+
+
+def get_complement(l):
+    c = lambda x: "".join(list(map(dnaComplement.get, [x[0], x[1], x[2], x[3]])))
+
+    complement = np.vectorize(c)
+
+    return list(map(complement, l))

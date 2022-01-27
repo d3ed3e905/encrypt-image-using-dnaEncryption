@@ -1,3 +1,4 @@
+from readline import get_completer
 from PIL import Image
 from utils import *
 
@@ -18,11 +19,11 @@ def main():
     print("pixels: {}  width: {} height: {} ".format(W * H, W, H))
 
     # compute logistic function
-    x = logistic_function(X0, R, W, H)
+    x = logistic_function(X0, R, H, W)
 
     # compute chaos logistic function
-    log_g_int = compute_g_dna(x)
-    print(log_g_int)
+    log_g_dna = compute_g_dna(x)
+    #print(log_g_dna)
 
     # Split image into R G B channels
     np_image = np.array(image)
@@ -33,7 +34,17 @@ def main():
 
     # Convert R G B values from binary representation to DNA
     r_dna, g_dna, b_dna = binary_to_dna([r_bin, g_bin, b_bin])
-    print(r_dna)
+    #print(r_dna)
+
+    # Compute DNA addition
+    r_s_add = scramble_add(r_dna, log_g_dna)
+    g_s_add = scramble_add(g_dna, log_g_dna)
+    b_s_add = scramble_add(b_dna, log_g_dna)
+    print(r_s_add)
+    
+    # Compute DNA complement
+    r_s_complement, g_s_complement, b_s_complement = get_complement([r_s_add, g_s_add, b_s_add])
+    print(r_s_complement)
 
     # Convert R G B from binary representation to int
     r_int, b_int, g_int = binary_to_int([r_bin, g_bin, b_bin])
