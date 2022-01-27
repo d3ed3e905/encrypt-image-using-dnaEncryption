@@ -24,12 +24,10 @@ def compute_f(e):
 
 
 # chaos logistic function
-def compute_g_dna(e):
+def compute_g_bin(e):
     vectorized_g = np.vectorize(lambda x: int(100000 * x) % 256)
 
-    to_binary = int_to_binary([vectorized_g(e)])
-    [to_dna] = binary_to_dna(to_binary)
-    return to_dna
+    return np.array(int_to_binary(vectorized_g(e)))
 
 
 # transform data
@@ -72,12 +70,12 @@ def dna_to_binary(l):
     return list(map(to_bin, l))
 
 
-def scramble_add(e, log_g):
+def scramble_add(e, f):
     add_dna = lambda x, y: "".join(
         list(map(dnaTable.get, [x[0] + y[0], x[1] + y[1], x[2] + y[2], x[3] + y[3]]))
     )
     compute_addition = np.vectorize(add_dna)
-    return np.array(list(map(compute_addition, e, log_g)))
+    return np.array(list(map(compute_addition, e, f)))
 
 
 def get_complement(l):
@@ -86,3 +84,25 @@ def get_complement(l):
     complement = np.vectorize(c)
 
     return list(map(complement, l))
+
+
+def compute_xor(e, g):
+    xor_bin = lambda x, y: "".join(
+        list(
+            map(
+                xorRule.get,
+                [
+                    x[0] + y[0],
+                    x[1] + y[1],
+                    x[2] + y[2],
+                    x[3] + y[3],
+                    x[4] + y[4],
+                    x[5] + y[5],
+                    x[6] + y[6],
+                    x[7] + y[7],
+                ],
+            )
+        )
+    )
+    xor = np.vectorize(xor_bin)
+    return np.array(list(map(xor, e, g)))

@@ -3,6 +3,9 @@
 rule = {"00": "A", "01": "C", "10": "G", "11": "T"}
 reversedRule = {"A": "00", "C": "01", "G": "10", "T": "11"}
 
+# DNA Complement
+dnaComplement = {"A": "T", "T": "A", "C": "G", "G": "C"}
+
 # DNA Addition and Subtraction Rule
 dnaTable = {
     "AA": "G",
@@ -23,5 +26,4 @@ dnaTable = {
     "GT": "T",
 }
 
-# DNA Complement
-dnaComplement = {"A": "T", "T": "A", "C": "G", "G": "C"}
+xorRule = {"00": "0", "01": "1", "10": "1", "11": "0"}

@@ -10,7 +10,7 @@ R = 3.94
 def main():
 
     # Read a image
-    file_path = "original/rb.png"
+    file_path = "original/lena.jpg"
     image = Image.open(file_path)
     # image.show("Original") # uncomment this line to show the image
 
@@ -22,10 +22,10 @@ def main():
     x = logistic_function(X0, R, H, W)
 
     # compute chaos logistic function
-    log_g_dna = compute_g_dna(x)
+    log_g_bin = compute_g_bin(x)
 
     # compute threshold function
-    f_bin = compute_f(x)
+    f_dna = compute_f(x)
 
     # Split image into R G B channels
     np_image = np.array(image)
@@ -36,32 +36,32 @@ def main():
 
     # Convert R G B values from binary representation to DNA
     r_dna, g_dna, b_dna = binary_to_dna([r_bin, g_bin, b_bin])
-    # print(r_dna)
 
     # Compute DNA addition
-    r_s_add = scramble_add(r_dna, log_g_dna)
-    g_s_add = scramble_add(g_dna, log_g_dna)
-    b_s_add = scramble_add(b_dna, log_g_dna)
-    # print(r_s_add)
+    r_s_add = scramble_add(r_dna, f_dna)
+    g_s_add = scramble_add(g_dna, f_dna)
+    b_s_add = scramble_add(b_dna, f_dna)
 
     # Compute DNA complement
     r_s_complement, g_s_complement, b_s_complement = get_complement(
         [r_s_add, g_s_add, b_s_add]
     )
-    # print(r_s_complement)
 
     r_s_bin, g_s_bin, b_s_bin = dna_to_binary(
         [r_s_complement, g_s_complement, b_s_complement]
     )
-    print(r_s_bin)
+
+    r_xored_bin = compute_xor(r_s_bin, log_g_bin)
+    g_xored_bin = compute_xor(g_s_bin, log_g_bin)
+    b_xored_bin = compute_xor(b_s_bin, log_g_bin)
 
     # Convert R G B from binary representation to int
-    r_int, b_int, g_int = binary_to_int([r_bin, g_bin, b_bin])
+    r_int, g_int, b_int = binary_to_int([r_xored_bin, g_xored_bin, b_xored_bin])
 
     # Merge R, G, B to get the image
-    np_stack = np.dstack([r, g, b]).astype(np.uint8)
+    np_stack = np.dstack([r_int, g_int, b_int]).astype(np.uint8)
     im = Image.fromarray(np_stack)
-    # im.show() #uncomment this line to show the image
+    im.show()  # uncomment this line to show the image
 
 
 if __name__ == "__main__":
