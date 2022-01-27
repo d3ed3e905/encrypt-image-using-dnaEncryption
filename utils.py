@@ -1,4 +1,4 @@
-from dna_data import rule
+from dna_data import *
 import numpy as np
 
 # logistic function
