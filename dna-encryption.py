@@ -31,6 +31,20 @@ def binary_to_int(r, g, b):
     )
 
 
+def binary_to_dna(r, g, b):
+    bin_to_dna = lambda x: "".join(
+        list(map(rule.get, [x[0:2], x[2:4], x[4:6], x[6:8]]))
+    )
+
+    binary_to_dna = np.vectorize(bin_to_dna)
+
+    return (
+        binary_to_dna(r),
+        binary_to_dna(g),
+        binary_to_dna(b),
+    )
+
+
 def main():
 
     # Read a image
@@ -48,11 +62,13 @@ def main():
 
     # Convert R G B values to binary representation
     r_bin, g_bin, b_bin = int_to_binary(r, g, b)
-    print(r_bin)
+    print(type(r_bin[1][1]))
+
+    # Convert R G B values from binary representation to DNA
+    r_dna, g_dna, b_dna = binary_to_dna(r_bin, g_bin, b_bin)
 
     # Convert R G B from binary representation to int
     r_int, b_int, g_int = binary_to_int(r_bin, g_bin, b_bin)
-    print(r_int)
 
     # Merge R, G, B to get the image
     np_stack = np.dstack([r, g, b]).astype(np.uint8)
