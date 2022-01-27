@@ -33,6 +33,7 @@ def main():
 
     # Convert R G B values from binary representation to DNA
     r_dna, g_dna, b_dna = binary_to_dna([r_bin, g_bin, b_bin])
+    print(r_dna)
 
     # Convert R G B from binary representation to int
     r_int, b_int, g_int = binary_to_int([r_bin, g_bin, b_bin])
