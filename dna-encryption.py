@@ -1,6 +1,8 @@
 from PIL import Image
 import numpy as np
 
+rule = {"00": "A", "01": "C", "10": "G", "11": "T"}
+
 
 def split_image_to_rgb(image):
     r = np.array(image[:, :, 0])
