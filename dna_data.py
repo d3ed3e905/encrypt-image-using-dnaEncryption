@@ -21,3 +21,6 @@ dnaTable = {
     "TG": "T",
     "GT": "T",
 }
+
+# DNA Complement
+dnaComplement = {"A": "T", "T": "A", "C": "G", "G": "C"}
