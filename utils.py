@@ -15,10 +15,12 @@ def logistic_function(x0, r, w, h):
 
 
 # threshold function
-def f(x):
-    if 0 < x <= 0.5:
-        return 0
-    return 1
+def compute_f(e):
+    vectorized_g = np.vectorize(lambda x: 0 if 0 < x <= 0.5 else 1)
+
+    to_binary = int_to_binary([vectorized_g(e)])
+    [to_dna] = binary_to_dna(to_binary)
+    return to_dna
 
 
 # chaos logistic function
@@ -58,6 +60,16 @@ def binary_to_dna(l):
     to_dna = np.vectorize(bin_to_dna)
 
     return list(map(to_dna, l))
+
+
+def dna_to_binary(l):
+    dna_to_bin = lambda x: "".join(
+        list(map(reversedRule.get, [x[0], x[1], x[2], x[3]]))
+    )
+
+    to_bin = np.vectorize(dna_to_bin)
+
+    return list(map(to_bin, l))
 
 
 def scramble_add(e, log_g):
