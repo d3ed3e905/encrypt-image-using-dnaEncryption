@@ -9,9 +9,24 @@ def split_image_to_rgb(image):
     return r, g, b
 
 
-int_to_binary = lambda x: np.binary_repr(x, width=8)
+def int_to_binary(r, g, b):
+    vectorized_int_to_binary = np.vectorize(lambda x: np.binary_repr(x, width=8))
 
-vectorized_int_to_binary = np.vectorize(int_to_binary)
+    return (
+        vectorized_int_to_binary(r),
+        vectorized_int_to_binary(g),
+        vectorized_int_to_binary(b),
+    )
+
+
+def binary_to_int(r, g, b):
+    vectorized_binary_to_int = np.vectorize(lambda x: int(x, 2))
+
+    return (
+        vectorized_binary_to_int(r),
+        vectorized_binary_to_int(g),
+        vectorized_binary_to_int(b),
+    )
 
 
 def main():
@@ -19,7 +34,7 @@ def main():
     # Read a image
     file_path = "original/rb.png"
     image = Image.open(file_path)
-    # image.show("Original")
+    # image.show("Original") # uncomment this line to show the image
 
     # Image size
     W, H = image.size
@@ -30,13 +45,17 @@ def main():
     r, g, b = split_image_to_rgb(np_image)
 
     # Convert R G B values to binary representation
-    rb = vectorized_int_to_binary(r)
-    print(rb)
+    r_bin, g_bin, b_bin = int_to_binary(r, g, b)
+    print(r_bin)
+
+    # Convert R G B from binary representation to int
+    r_int, b_int, g_int = binary_to_int(r_bin, g_bin, b_bin)
+    print(r_int)
 
     # Merge R, G, B to get the image
     np_stack = np.dstack([r, g, b]).astype(np.uint8)
     im = Image.fromarray(np_stack)
-    # im.show()
+    # im.show() #uncomment this line to show the image
 
 
 if __name__ == "__main__":
