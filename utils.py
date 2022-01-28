@@ -1,5 +1,6 @@
-from dna_data import *
 import numpy as np
+from matplotlib import pyplot as plt
+from dna_data import *
 
 # logistic function
 def logistic_function(x0, r, w, h):
