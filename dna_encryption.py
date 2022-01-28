@@ -10,7 +10,7 @@ R = 3.94
 def dna_encryption(image):
     # Image size
     W, H = image.size
-    print("pixels: {}  width: {} height: {} ".format(W * H, W, H))
+    print("Original\tpixels: {}  width: {} height: {} ".format(W * H, W, H))
 
     # compute logistic function
     x = logistic_function(X0, R, H, W)
@@ -61,7 +61,7 @@ def dna_encryption(image):
 
 def dna_decryption(image):
     W, H = image.size
-    print("pixels: {}  width: {} height: {} ".format(W * H, W, H))
+    print("Encrypted\tpixels: {}  width: {} height: {} ".format(W * H, W, H))
 
     # compute logistic function
     x = logistic_function(X0, R, H, W)
